@@ -95,9 +95,10 @@ mongotcl_bsontolist_raw (Tcl_Interp *interp, Tcl_Obj *listObj, const char *data 
 			case BSON_CODEWSCOPE: {
 				bson_printf( "BSON_CODE_W_SCOPE: %s", bson_iterator_code( &i ) );
 				/* bson_init( &scope ); */ /* review - stepped on by bson_iterator_code_scope? */
-				bson_iterator_code_scope( &i, &scope );
+				bson_iterator_code_scope_init( &i, &scope, 0 );
 				bson_printf( "\n\t SCOPE: " );
 				bson_print( &scope );
+				bson_destroy( &scope );
 				/* bson_destroy( &scope ); */ /* review - causes free error */
 				break;
 			}

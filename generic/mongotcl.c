@@ -765,7 +765,7 @@ mongotcl_mongoObjectObjCmd(ClientData cData, Tcl_Interp *interp, int objc, Tcl_O
 				return TCL_ERROR;
 			}
 
-			if (mongo_create_index (md->conn, Tcl_GetString(objv[2]), keyBson, updateFlags, outBson) != MONGO_OK) {
+			if (mongo_create_index (md->conn, Tcl_GetString(objv[2]), keyBson, NULL, updateFlags, -1, outBson) != MONGO_OK) {
 				return mongotcl_setMongoError (interp, md->conn);
 			}
 
