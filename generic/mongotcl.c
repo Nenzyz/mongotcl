@@ -325,6 +325,7 @@ mongotcl_mongoObjectObjCmd(ClientData cData, Tcl_Interp *interp, int objc, Tcl_O
 			}
 
 			if (mongo_update (md->conn, Tcl_GetString(objv[2]), condBson, opBson, updateType, md->write_concern) != MONGO_OK) {
+				Tcl_AddErrorInfo (interp, md->conn->lasterrstr);
 				return mongotcl_setMongoError (interp, md->conn);
 			}
 
@@ -666,7 +667,7 @@ mongotcl_mongoObjectObjCmd(ClientData cData, Tcl_Interp *interp, int objc, Tcl_O
 			if (mongo_cmd_get_last_error (md->conn, Tcl_GetString(objv[2]), &out) != MONGO_OK) {
 				return mongotcl_setMongoError (interp, md->conn);
 			}
-
+			// Tcl_SetObjResult (interp, mongotcl_bsontolist(interp, &out));
 			break;
 		}
 
@@ -681,6 +682,7 @@ mongotcl_mongoObjectObjCmd(ClientData cData, Tcl_Interp *interp, int objc, Tcl_O
 			if (mongo_cmd_get_prev_error (md->conn, Tcl_GetString(objv[2]), &out) != MONGO_OK) {
 				return mongotcl_setMongoError (interp, md->conn);
 			}
+			// Tcl_SetObjResult (interp, mongotcl_bsontolist(interp, &out));
 
 			break;
 		}

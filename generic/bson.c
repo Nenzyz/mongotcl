@@ -161,6 +161,7 @@ mongotcl_bsontoarray_raw (Tcl_Interp *interp, char *arrayName, char *typeArrayNa
     char oidhex[25];
 	Tcl_Obj *obj;
 	char *type;
+    bson scope;
 
 	if (data == NULL) {
 		return TCL_OK;
@@ -248,12 +249,12 @@ mongotcl_bsontoarray_raw (Tcl_Interp *interp, char *arrayName, char *typeArrayNa
 			}
 
 			case BSON_CODEWSCOPE: {
-				// bson_printf( "BSON_CODE_W_SCOPE: %s", bson_iterator_code( &i ) );
+				bson_printf( "BSON_CODE_W_SCOPE: %s", bson_iterator_code( &i ) );
 				/* bson_init( &scope ); */ /* review - stepped on by bson_iterator_code_scope? */
-				// bson_iterator_code_scope( &i, &scope );
-				// bson_printf( "\n\t SCOPE: " );
-				// bson_print( &scope );
-				/* bson_destroy( &scope ); */ /* review - causes free error */
+				bson_iterator_code_scope_init( &i, &scope, 0 );
+				bson_printf( "\n\t SCOPE: " );
+				bson_print( &scope );
+				 bson_destroy( &scope );  /* review - causes free error */
 				break;
 			}
 
